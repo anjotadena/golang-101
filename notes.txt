@@ -1,0 +1,9 @@
+GO CLI
+
+go build - Compiles a bunch of go source code files
+go run - Compiles and executes one or two files
+go fmt - Formats all the code in each files
+
+Go is an open source programming language designed for building simple, fast, and reliable software.
+
+Go by Example is a hands-on introduction to Go using annotated example programs. Check out the first example or browse the full list below.
