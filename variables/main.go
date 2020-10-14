@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 func main() {
 	var a = "Initial"
@@ -25,4 +28,13 @@ func main() {
 	fmt.Println(arr[0])
 
 	// fmt.Println(arr[11]) # out of boulds for 4-element array
+
+	// CHECK TYPE OF VARIABLES
+	var s string = "string"
+	var i int = 10
+	var flt float32 = 1.2
+
+	fmt.Println(reflect.TypeOf(s))   // > string
+	fmt.Println(reflect.TypeOf(i))   // > int
+	fmt.Println(reflect.TypeOf(flt)) // > float32
 }
