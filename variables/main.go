@@ -75,5 +75,6 @@ func showMemoryAddress(x int) {
 }
 
 func showMemoryAddressPointer(x *int) {
-	fmt.Println(x)
+	fmt.Println(x)  // display parameter memory address
+	fmt.Println(*x) // this will display the value
 }
