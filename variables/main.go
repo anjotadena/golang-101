@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"reflect"
+	"strconv"
 )
 
 func main() {
@@ -37,4 +38,16 @@ func main() {
 	fmt.Println(reflect.TypeOf(s))   // > string
 	fmt.Println(reflect.TypeOf(i))   // > int
 	fmt.Println(reflect.TypeOf(flt)) // > float32
+
+	s = "true"
+
+	pb, err := strconv.ParseBool(s)
+
+	if err != nil {
+		fmt.Errorf("%s", err)
+	}
+
+	fmt.Println(pb)                           // true
+	fmt.Println("IS BOOLEAN: ", pb)           // true
+	fmt.Println("Type: ", reflect.TypeOf(pb)) // bool
 }
