@@ -1,4 +1,4 @@
-package variables
+package main
 
 import "fmt"
 
@@ -19,4 +19,10 @@ func main() {
 
 	f := "apple"
 	fmt.Println(f)
+
+	var arr [4]string
+	fmt.Println("ARRAY")
+	fmt.Println(arr[0])
+
+	// fmt.Println(arr[11]) # out of boulds for 4-element array
 }
