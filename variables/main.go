@@ -50,4 +50,30 @@ func main() {
 	fmt.Println(pb)                           // true
 	fmt.Println("IS BOOLEAN: ", pb)           // true
 	fmt.Println("Type: ", reflect.TypeOf(pb)) // bool
+
+	// Pointers
+	x := "Hello, World!"
+
+	fmt.Println(x) // this prints a value
+	// base 16format
+	fmt.Println(&x) // this prints a variable address in which the location of memory stored
+
+	y := 1
+	fmt.Println(&y) // this will display memory address
+
+	// using pointer
+	showMemoryAddress(y)
+	// the example above will display 2 different memory address
+
+	// to avoid another memory to used
+	showMemoryAddressPointer(&y)
+
+}
+
+func showMemoryAddress(x int) {
+	fmt.Println(&x)
+}
+
+func showMemoryAddressPointer(x *int) {
+	fmt.Println(x)
 }
