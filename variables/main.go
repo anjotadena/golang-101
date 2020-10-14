@@ -6,6 +6,8 @@ import (
 	"strconv"
 )
 
+const greetings string = "Hello, World GREETINGS!"
+
 func main() {
 	var a = "Initial"
 
@@ -68,6 +70,10 @@ func main() {
 	// to avoid another memory to used
 	showMemoryAddressPointer(&y)
 
+	// Use constant variable
+	fmt.Println(greetings)
+	// cannot change a contant variable
+	// greetings = "HELLO TEST!"
 }
 
 func showMemoryAddress(x int) {
