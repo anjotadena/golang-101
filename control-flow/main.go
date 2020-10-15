@@ -5,6 +5,10 @@ import "fmt"
 // control flow evaluates condition statements
 
 func main() {
+
+	// defer will execute once the function completes
+	defer fmt.Println("Im Last?")
+
 	b := true
 
 	if b {
@@ -80,4 +84,11 @@ func main() {
 	for i := 0; i < 10; i++ {
 		fmt.Println("i is ", i)
 	}
+
+	numbers := []int{1, 2, 3, 4}
+
+	for i, n := range numbers {
+		fmt.Printf("Index %d, Value: %d\n", i, n)
+	}
+
 }
