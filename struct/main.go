@@ -1,15 +1,18 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"math"
 	"reflect"
+	"strconv"
 )
 
 // Struct is a collection of data fields with declared data types.
 
 type Movie struct {
 	Name   string
-	Rating float32
+	Rating float64
 }
 
 type Hero struct {
@@ -37,6 +40,71 @@ func NewAlarm(time string) Alarm {
 type Drink struct {
 	Name string
 	Ice  bool
+}
+
+func (m *Movie) summary() string {
+	r := strconv.FormatFloat(m.Rating, 'f', 1, 64)
+
+	return m.Name + ", " + r
+}
+
+type Sphere struct {
+	Radius float64
+}
+
+func (s *Sphere) SurfaceArea() float64 {
+	return float64(4) * math.Pi * (s.Radius * s.Radius)
+}
+
+func (s *Sphere) Volume() float64 {
+	radiusCubed := s.Radius * s.Radius * s.Radius
+
+	return (float64(4) / float64(3)) * math.Pi * radiusCubed
+}
+
+type Triangle struct {
+	Base   float64
+	Height float64
+}
+
+// Passing a Pointer Reference to a Method
+func (t *Triangle) Area() float64 {
+	return 0.5 * (t.Base * t.Height)
+}
+
+// Passing a Value Reference to a Method
+func (t Triangle) ChangeBase(f float64) {
+	// Any changes on this will not be affected to the original value
+	// this function operates a copy of a variable
+	t.Base = f
+	return
+}
+
+type Robot interface {
+	PowerOn() error
+}
+
+type T850 struct {
+	Name string
+}
+
+func (a *T850) PowerOn() error {
+	return nil
+}
+
+type R2D2 struct {
+	Broken bool
+}
+
+func (r *R2D2) PowerOn() error {
+	if r.Broken {
+		return errors.New("R2D2 is broken")
+	}
+	return nil
+}
+
+func Boot(r Robot) error {
+	return r.PowerOn()
 }
 
 func main() {
@@ -136,4 +204,55 @@ func main() {
 	fmt.Println("TypeOf b: ", b)
 	fmt.Println("TypeOf c: ", c)
 	fmt.Println("TypeOf d: ", d)
+
+	// Declaring methods
+
+	fmt.Println("Movie Summary: ", m.summary())
+
+	sphere := Sphere{
+		Radius: 5,
+	}
+
+	fmt.Println("Sphere surface area: ", sphere.SurfaceArea())
+	fmt.Println("Sphere volume: ", sphere.Volume())
+
+	t := Triangle{Base: 3, Height: 1}
+	fmt.Println("Triangle Area: ", t.Area())
+
+	t.ChangeBase(4) // operates a copy value
+	fmt.Println("Triangle Change Base: ", t)
+
+	// NOTES:
+	// If you want to modify or mutate the original initialization of a struct use pointer else use value ref
+
+	// USING INTERFACES
+	// - specifies a method set
+	// - as Blueprint of your struct
+	// - describe all the methods of a method to set and provides the function signatures for each method.
+
+	fmt.Println("*************ROBOTS*****************")
+
+	r1 := T850{
+		Name: "The terminator",
+	}
+
+	r2 := R2D2{
+		Broken: true,
+	}
+
+	err := Boot(&r2)
+
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("Robot is powered on!")
+	}
+
+	err = Boot(&r1)
+
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("Robot is powered on!")
+	}
 }
