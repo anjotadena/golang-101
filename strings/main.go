@@ -47,4 +47,5 @@ func main() {
 
 	// Trimming and Trailing Whitespace
 	fmt.Println(strings.TrimSpace("          I don't need all this space          "))
+	fmt.Println("TEST")
 }
