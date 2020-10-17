@@ -32,6 +32,12 @@ func responseTime(url string) {
 	fmt.Printf("%s took %v seconds \n", url, elapsed)
 }
 
+func receiver(c chan string) {
+	for msg := range c {
+		fmt.Println(msg)
+	}
+}
+
 func main() {
 	// go slowFunc()
 	// fmt.Println("I'm not shown until slowFunc() completes")
@@ -58,4 +64,19 @@ func main() {
 	msg := <-c // this blocks the process until a message has been received
 
 	fmt.Println("This message comming from channel: ", msg)
+
+	// Using buffered channels
+	const BUFFER_LENGTH = 2
+
+	// this creates a buffered channel that can buffer up to 2 messages
+	messages := make(chan string, BUFFER_LENGTH)
+
+	messages <- "hello"
+	messages <- "world"
+
+	close(messages) // meaning no more messages can be set
+
+	fmt.Println("Pushed two messages onto channel with no receivers")
+	time.Sleep(time.Second * 1)
+	receiver(messages)
 }
