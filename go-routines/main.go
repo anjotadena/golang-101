@@ -52,6 +52,15 @@ func pingChannel(c chan string, cn string) {
 	c <- "ping on " + cn
 }
 
+func sender(c chan string) {
+	t := time.NewTicker(1 * time.Second)
+
+	for {
+		c <- "I'm sending a message"
+		<-t.C
+	}
+}
+
 func main() {
 	// go slowFunc()
 	// fmt.Println("I'm not shown until slowFunc() completes")
@@ -113,5 +122,26 @@ func main() {
 		fmt.Println("received: ", msg1)
 	case msg2 := <-c2:
 		fmt.Println("received: ", msg2)
+	}
+
+	// Quitting channels
+	qm := make(chan string)
+	stop := make(chan bool)
+
+	go sender(qm)
+
+	go func() {
+		time.Sleep(time.Second * 2)
+		fmt.Println("Time's up!")
+		stop <- true
+	}()
+
+	for {
+		select {
+		case <-stop:
+			return
+		case qMsg := <-qm:
+			fmt.Println("Channel: ", qMsg)
+		}
 	}
 }
