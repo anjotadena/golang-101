@@ -38,6 +38,20 @@ func receiver(c chan string) {
 	}
 }
 
+func ping(c chan string) {
+	t := time.NewTicker(1 * time.Second)
+
+	for {
+		c <- "ping"
+		<-t.C
+	}
+}
+
+func pingChannel(c chan string, cn string) {
+	time.Sleep(time.Second * 2)
+	c <- "ping on " + cn
+}
+
 func main() {
 	// go slowFunc()
 	// fmt.Println("I'm not shown until slowFunc() completes")
@@ -79,4 +93,25 @@ func main() {
 	fmt.Println("Pushed two messages onto channel with no receivers")
 	time.Sleep(time.Second * 1)
 	receiver(messages)
+
+	pings := make(chan string)
+	go ping(pings)
+
+	resultPings := <-pings
+
+	fmt.Println(resultPings)
+
+	//
+	c1 := make(chan string)
+	c2 := make(chan string)
+
+	go pingChannel(c1, "Channel1")
+	go pingChannel(c2, "Channel2")
+
+	select {
+	case msg1 := <-c1:
+		fmt.Println("received: ", msg1)
+	case msg2 := <-c2:
+		fmt.Println("received: ", msg2)
+	}
 }
