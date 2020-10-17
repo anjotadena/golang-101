@@ -10,9 +10,10 @@ import (
 // Concurrency works/dealing a lot of things at once while parallism is about doing a lots of things at once
 
 // this simulates blocking functions
-func slowFunc() {
+func slowFunc(c chan string) {
 	time.Sleep(time.Second * 2) // pause execution for 2 seconds
-	fmt.Println("sleeper() finished")
+	// fmt.Println("sleeper() finished")
+	c <- "slowFunc() finished"
 }
 
 func responseTime(url string) {
@@ -48,4 +49,13 @@ func main() {
 	}
 
 	time.Sleep(time.Second * 5)
+
+	// initialize channel
+	c := make(chan string)
+
+	go slowFunc(c)
+
+	msg := <-c // this blocks the process until a message has been received
+
+	fmt.Println("This message comming from channel: ", msg)
 }
