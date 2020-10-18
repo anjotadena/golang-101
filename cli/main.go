@@ -4,9 +4,55 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 )
 
+func flagUsage() {
+	usageText := `SubCommands is an example of CLI tool.
+		Usage:
+			SubCommand command [arguments]
+			The commands are:
+				uppercase uppercase a string
+				lowercase lowercase a string
+			Use "SubCommand [command] --help" for more information about a command.
+	`
+	fmt.Fprintf(os.Stderr, "%s\n\n", usageText)
+}
+
+func SubCommands() {
+	flag.Usage = flagUsage
+	uppercase := flag.NewFlagSet("uppercase", flag.ExitOnError)
+	lowercase := flag.NewFlagSet("lowercase", flag.ExitOnError)
+
+	if len(os.Args) == 1 {
+		flag.Usage()
+		return
+	}
+
+	switch os.Args[1] {
+	case "uppercase":
+		s := uppercase.String("s", "", "A string of text to be uppercased")
+		uppercase.Parse(os.Args[2:])
+		fmt.Println(strings.ToUpper(*s))
+	case "lowercase":
+		s := lowercase.String("s", "", "A string of text to be lowercased")
+		lowercase.Parse(os.Args[2:])
+		fmt.Println(strings.ToLower(*s))
+	default:
+		flag.Usage()
+	}
+}
+
+// POSIX Compliance
+// https://www.gnu.org/software/libc/manual/html_node/Argument-Syntax.html
+
 func main() {
+
+	if true {
+		SubCommands()
+		return
+	}
+
 	// Customizing help
 	flag.Usage = func() {
 		usageText := `Usage example04 [OPTION]
