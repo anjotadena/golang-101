@@ -26,5 +26,14 @@ func main() {
 		return
 	}
 
-	fmt.Printf("Factorial of %d is %d\n", n, factorial(n))
+	// using recursion
+	// fmt.Printf("Factorial of %d is %d\n", n, factorial(n))
+
+	factorial := n // 5
+
+	for i := n; i > 1; i-- {
+		factorial *= i - 1
+	}
+
+	fmt.Printf("Factorial of %d is %d\n", n, factorial)
 }
