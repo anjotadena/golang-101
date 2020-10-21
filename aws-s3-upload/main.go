@@ -42,7 +42,7 @@ func main() {
 
 	// Upload
 	_, errUpload := s3.New(s).PutObject(&s3.PutObjectInput{
-		Bucket: aws.String("digi-entry-players"),
+		Bucket: aws.String(""),
 		Key:    aws.String(handler.Filename),
 		ACL:    aws.String("public-read"),
 		Body:   file,
